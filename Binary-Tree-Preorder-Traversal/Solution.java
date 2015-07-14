@@ -10,36 +10,27 @@
 public class Solution {
     public List<Integer> preorderTraversal(TreeNode root) {
         List<Integer> result = new ArrayList<Integer>();
-        Stack<TreeNode> stack = new Stack<TreeNode>();
+        Stack<java.util.AbstractMap.SimpleEntry<TreeNode,Boolean>> stack = new Stack<java.util.AbstractMap.SimpleEntry<TreeNode,Boolean>>();
         if(root == null) {
             return result;
         }
-        TreeNode current = root;
-        while(true) {
-            stack.push(current);
-            result.add(current.val);
-            
-            if(current.left != null) {
-                current = current.left;
-                continue;
-            }
-            if(current.right != null) {
-                current = current.right;
-                continue;
-            }
-            
-            while(true) {
-               stack.pop();
-               if(stack.empty()) {
-                   return result;
-               }
-               if(current == stack.peek().right || current == stack.peek().left && stack.peek().right == null) {
-                   current = stack.peek();
-                   continue;
-               }
-               current = stack.peek().right;    
-               break;
+        stack.push(new java.util.AbstractMap.SimpleEntry(root, false));
+        while(!stack.empty()) {
+            java.util.AbstractMap.SimpleEntry<TreeNode,Boolean> entry = stack.pop();
+            if(entry.getValue() == true || entry.getKey().left == entry.getKey().right && entry.getKey().right == null) {
+                result.add(entry.getKey().val);
+            } else {
+                if(entry.getKey().right != null) {
+                    stack.push(new java.util.AbstractMap.SimpleEntry(entry.getKey().right, false));
+                }
+                if(entry.getKey().left != null) {
+                    stack.push(new java.util.AbstractMap.SimpleEntry(entry.getKey().left, false));
+                }
+                entry.setValue(true);
+                stack.push(entry);
             }
         }
+        
+        return result;
     }
 }
