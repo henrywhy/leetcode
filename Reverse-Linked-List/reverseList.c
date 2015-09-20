@@ -7,17 +7,13 @@
  */
 struct ListNode* reverseList(struct ListNode* head) {
     struct ListNode *p, *c, *q;
-    p = head;
-    if(p==NULL) {
-        return NULL;
-    }
-    c = p->next;
+    p = NULL;
+    c = head;
     if(c==NULL) {
-        return p;
+        return NULL;
     }
     q = c->next;
     
-    p->next = NULL;
     while(1) {
         c->next = p;
         if(q==NULL) {
