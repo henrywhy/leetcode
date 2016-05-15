@@ -1,4 +1,9 @@
 public class Solution {
+    
+    private boolean isSettedOne(int num, int index) {
+        return (num & (1 << index)) != 0;
+    }
+    
     public int[] singleNumber(int[] nums) {
         
         int xorResult = nums[0];
@@ -8,7 +13,7 @@ public class Solution {
         
         int differentBitNum = 0;
         for(int i=0; i<Integer.SIZE; i++) {
-            if((xorResult & (int)Math.pow(2,i)) != 0) {
+            if(isSettedOne(xorResult, i)) {
                 
                 differentBitNum = i;
                 break;
@@ -19,7 +24,7 @@ public class Solution {
         int[] singleNums = new int[2];
         singleNums[0] = 0;
         for(int i=0; i<nums.length; i++) {
-            if((nums[i] & (int)Math.pow(2, differentBitNum)) !=0) {
+            if(isSettedOne(nums[i], differentBitNum)) {
                 singleNums[0] ^= nums[i];
             }
           
